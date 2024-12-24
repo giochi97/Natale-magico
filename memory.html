@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Natalizio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 150px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        .card {
+            width: 150px;
+            height: 150px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .flipped {
+            background-color: #d62828;
+            color: white;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Memory Natalizio</h1>
+    <p>Trova tutte le coppie natalizie!</p>
+    <div class="game-board" id="gameBoard"></div>
+    <script>
+        const images = ['🎅', '🎄', '🎁', '❄️', '⭐', '🦌', '🕯️', '🎉', '🌟', '🎋', '🎶', '🍪'];
+        let cards = [...images, ...images];
+        let flippedCards = [];
+        const gameBoard = document.getElementById('gameBoard');
+
+        // Mischia le carte
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Crea la griglia di carte
+        function createBoard() {
+            cards = shuffle(cards);
+            cards.forEach(card => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.dataset.value = card;
+                div.addEventListener('click', flipCard);
+                gameBoard.appendChild(div);
+            });
+        }
+
+        // Funzione per girare la carta
+        function flipCard(event) {
+            const card = event.target;
+            if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                card.textContent = card.dataset.value;
+                flippedCards.push(card);
+
+                if (flippedCards.length === 2) {
+                    setTimeout(checkMatch, 1000);
+                }
+            }
+        }
+
+        // Controlla se le carte sono uguali
+        function checkMatch() {
+            if (flippedCards[0].dataset.value === flippedCards[1].dataset.value) {
+                flippedCards = [];
+            } else {
+                flippedCards.forEach(card => {
+                    card.classList.remove('flipped');
+                    card.textContent = ''; // Rimuove il simbolo e riporta la carta al bianco
+                });
+                flippedCards = [];
+            }
+        }
+
+        createBoard();
+    </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco dei Fuochi d'Artificio</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Stessa famiglia di font del sito principale */
+            margin: 0;
+            padding: 0;
+            background-color: #0c0c0c;
+            color: white;
+            text-align: center;
+        }
+
+        .firework-image {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            animation: fadeInOut 1s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .score {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+
+        .game-over {
+            color: #ff5c5c;
+            font-size: 2em;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Gioco dei Fuochi d'Artificio</h1>
+    <p>Clicca sui fuochi d'artificio che appaiono nella schermata!</p>
+    <div class="score">Punti: <span id="score">0</span></div>
+    <div class="game-over" id="gameOver" style="display: none;">Game Over!</div>
+
+    <script>
+        let score = 0;
+        const scoreElement = document.getElementById('score');
+        const gameOverElement = document.getElementById('gameOver');
+        const gameDuration = 30000; // durata del gioco in millisecondi (30 secondi)
+        const maxFireworks = 10; // Numero massimo di fuochi d'artificio che appaiono
+
+        // Funzione per generare fuochi d'artificio
+        function createFirework() {
+            const firework = document.createElement('img');
+            firework.src = 'fuochidartificio.webp';  // Utilizzo dell'immagine locale
+            firework.classList.add('firework-image');
+            firework.style.left = `${Math.random() * 90}%`;
+            firework.style.top = `${Math.random() * 90}%`;
+            firework.onclick = () => {
+                score++;
+                scoreElement.textContent = `${score}`;
+                firework.remove();  // Rimuove il fuoco d'artificio dopo il clic
+            };
+
+            document.body.appendChild(firework);
+
+            // Rimuove il fuoco d'artificio dopo che ha fatto la sua animazione
+            setTimeout(() => {
+                firework.remove();
+            }, 1000);
+        }
+
+        // Funzione per far apparire i fuochi d'artificio a intervalli
+        function startGame() {
+            const gameInterval = setInterval(createFirework, 1000); // Appare un fuoco d'artificio ogni 1 secondo
+
+            // Termina il gioco dopo la durata definita
+            setTimeout(() => {
+                clearInterval(gameInterval);
+                gameOverElement.style.display = 'block';
+            }, gameDuration);
+        }
+
+        // Avvia il gioco
+        startGame();
+
+    </script>
+</body>
+</html>

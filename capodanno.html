@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capodanno Magico</title>
+    <style>
+        /* Scroll fluido */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Variabili per personalizzare il colore */
+        :root {
+            --button-color: #d62828;  /* Colore del bottone */
+            --text-color: #ffffff;    /* Colore del testo */
+            --background-color: #ffffff; /* Colore di sfondo */
+        }
+
+        /* Stile Generale */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: #333333;
+            overflow-x: hidden;
+        }
+
+        header {
+            text-align: center;
+            background-color: var(--button-color);
+            color: var(--text-color);
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 3em;
+        }
+
+        header p {
+            font-size: 1.2em;
+        }
+
+        nav {
+            text-align: center;
+            background-color: #a21e1e;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.2em;
+            margin: 0 15px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: var(--button-color);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .recipe-section,
+        .game-section,
+        .printable-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .recipe-card,
+        .game-card,
+        .printable-card {
+            width: 300px;
+            border: 2px solid var(--button-color);
+            border-radius: 8px;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .recipe-card img,
+        .game-card img,
+        .printable-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .recipe-card h3 a,
+        .game-card h3 a,
+        .printable-card h3 a {
+            text-decoration: none;
+            color: var(--button-color);
+            font-size: 1.5em;
+        }
+
+        .recipe-card h3 a:hover,
+        .game-card h3 a:hover,
+        .printable-card h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .recipe-card p,
+        .game-card p,
+        .printable-card p {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .recipe-card:hover,
+        .game-card:hover,
+        .printable-card:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            background-color: var(--button-color);
+            color: var(--text-color);
+            padding: 10px 0;
+        }
+
+        button {
+            background-color: #d62828;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #a21e1e;
+        }
+
+        .output-message {
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.5em;
+            border: 1px solid #d62828;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Animazioni per Buon Anno */
+        .newyear-fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1000x1000') center center no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            color: white;
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            animation: fireworks 5s forwards;
+        }
+
+        @keyframes fireworks {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎆 Capodanno Magico 🎉</h1>
+        <p>Benvenuto nel portale definitivo per il Capodanno!</p>
+    </header>
+
+    <!-- Navigazione -->
+    <nav>
+        <a href="#countdown">Conto alla Rovescia</a>
+        <a href="#recipes">Ricette</a>
+        <a href="#games">Giochi</a>
+        <a href="#quiz">Quiz</a>
+        <a href="#printable">Stampabile</a>
+    </nav>
+
+    <!-- Conto alla Rovescia -->
+    <section class="section" id="countdown">
+        <h2>⏳ Conto alla Rovescia per Capodanno ⏳</h2>
+        <p id="timer">Caricamento...</p>
+    </section>
+
+    <!-- Ricette -->
+    <section class="section" id="recipes">
+        <h2>🍾 Ricette per Capodanno 🍰</h2>
+        <div class="recipe-section">
+            <div class="recipe-card">
+                <h3><a href="cotechino.html">Cotechino con Lenticchie</a></h3>
+                <p>Il piatto tradizionale per festeggiare l'anno nuovo!</p>
+            </div>
+            <div class="recipe-card">
+                <h3><a href="panettone.html">Panettone</a></h3>
+                <p>Il dolce classico di Natale e Capodanno.</p>
+            </div>
+            <div class="recipe-card">
+                <h3><a href="tiramisu.html">Tiramisù</a></h3>
+                <p>Un dolce delizioso per festeggiare!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Giochi -->
+    <section class="section" id="games">
+        <h2>🎮 Giochi di Capodanno 🎮</h2>
+        <div class="game-section">
+            <div class="game-card">
+                <h3><a href="fireworks-game.html">Gioco dei Fuochi d'Artificio</a></h3> <!-- Collegamento al gioco -->
+                <p>Scopri quanto sei bravo a lanciare i fuochi d'artificio! Clicca per farli esplodere e guadagnare punti!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="section" id="quiz">
+        <h2>🧠 Quiz di Capodanno 🧠</h2>
+        <div class="quiz-container">
+            <p>Testa le tue conoscenze sul Capodanno con queste domande!</p>
+    
+            <!-- Domanda 1 -->
+            <div class="question">
+                <p>1. Quando si festeggia il Capodanno?</p>
+                <form>
+                    <input type="radio" id="q1a1" name="q1" value="January 1">
+                    <label for="q1a1">1 gennaio</label><br>
+                    <input type="radio" id="q1a2" name="q1" value="December 25">
+                    <label for="q1a2">25 dicembre</label><br>
+                    <input type="radio" id="q1a3" name="q1" value="December 31">
+                    <label for="q1a3">31 dicembre</label><br>
+                </form>
+            </div>
+    
+            <!-- Domanda 2 -->
+            <div class="question">
+                <p>2. Qual è il simbolo tradizionale per celebrare il Capodanno in Italia?</p>
+                <form>
+                    <input type="radio" id="q2a1" name="q2" value="Panettone">
+                    <label for="q2a1">Panettone</label><br>
+                    <input type="radio" id="q2a2" name="q2" value="Cotechino">
+                    <label for="q2a2">Cotechino</label><br>
+                    <input type="radio" id="q2a3" name="q2" value="Pandoro">
+                    <label for="q2a3">Pandoro</label><br>
+                </form>
+            </div>
+    
+            <!-- Domanda 3 -->
+            <div class="question">
+                <p>3. Quale dei seguenti fuochi d'artificio è più comune durante la celebrazione di Capodanno?</p>
+                <form>
+                    <input type="radio" id="q3a1" name="q3" value="Fuochi a forma di cuore">
+                    <label for="q3a1">Fuochi a forma di cuore</label><br>
+                    <input type="radio" id="q3a2" name="q3" value="Fontane di stelle">
+                    <label for="q3a2">Fontane di stelle</label><br>
+                    <input type="radio" id="q3a3" name="q3" value="Fuochi d'artificio colorati">
+                    <label for="q3a3">Fuochi d'artificio colorati</label><br>
+                </form>
+            </div>
+    
+            <button id="submit-quiz">Invia Risposte</button>
+            <div id="quiz-result" style="display:none; margin-top: 20px;">
+                <h3>Risultati del Quiz:</h3>
+                <p id="quiz-score"></p>
+            </div>
+        </div>
+    
+    <!-- Materiale Stampabile -->
+    <section class="section" id="printable">
+        <h2>🎉 Cartolina di Capodanno Stampabile 🎉</h2>
+        <p>Scarica e stampa la tua cartolina di Capodanno per inviare auguri speciali!</p>
+        <a href="cartolina_capodanno.jpg" target="_blank">
+            <img src="cartolina_capodanno.jpg" alt="Cartolina Capodanno" style="width: 100%; max-width: 600px; border: 2px solid #d62828; border-radius: 10px;">
+        </a>
+    </section>
+
+    <!-- Messaggio di Buon Anno (visibile solo dal 1 gennaio alle 00:00) -->
+    <div id="newyear-message" class="newyear-fireworks" style="display: none;">
+        <p>🥂 Buon Anno Nuovo! 🎆</p>
+    </div>
+
+    <footer>
+        <p>🎇 Buon Anno da Capodanno Magico! 🎉</p>
+    </footer>
+
+    <script>
+        // Funzione per il countdown
+        function updateCountdown() {
+            const now = new Date();
+            const newYear = new Date("January 1, 2025 00:00:00"); // Nuovo Anno
+
+            // Imposta la data di partenza del countdown (26 dicembre)
+            const targetDate = new Date("December 26, 2024 00:00:00");
+
+            // Calcola il tempo rimanente
+            const diff = newYear - now;
+
+            // Se il countdown è finito, mostra Buon Anno
+            if (diff <= 0) {
+                document.getElementById("timer").innerText = "FELICE ANNO NUOVO!";
+                document.getElementById("newyear-message").style.display = "flex"; // Mostra il messaggio di Capodanno
+            } else {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById("timer").innerText = `${days} giorni ${hours} ore ${minutes} minuti ${seconds} secondi`;
+            }
+        }
+
+        setInterval(updateCountdown, 1000); // Aggiorna ogni secondo
+
+        // Quiz
+        document.getElementById("submit-quiz").addEventListener("click", function() {
+            var score = 0;
+            
+            // Verifica le risposte
+            if (document.getElementById("q1a1").checked) score++;
+            if (document.getElementById("q2a2").checked) score++;
+            if (document.getElementById("q3a3").checked) score++;
+
+            // Mostra i risultati
+            document.getElementById("quiz-score").textContent = "Hai ottenuto " + score + " su 3!";
+            document.getElementById("quiz-result").style.display = "block";
+        });
+    </script>
+</body>
+</html>

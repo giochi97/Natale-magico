@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesca i Regali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0f7fa;
+        }
+        #catch-area {
+            width: 100%;
+            height: 80vh;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+        .gift, .snowflake, .santa, .star, .tree {
+            font-size: 3em;
+            position: absolute;
+            top: -50px;
+            cursor: pointer;
+        }
+        #score {
+            font-size: 1.5em;
+            color: #d62828;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        #timer {
+            font-size: 1.5em;
+            color: #00796b;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        @keyframes fall {
+            0% { top: -50px; }
+            100% { top: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Pesca i Regali</h1>
+    <p>Cattura i regali natalizi che cadono dal cielo!</p>
+    <div id="score">Punteggio: 0</div>
+    <div id="timer">Tempo: 30</div> <!-- Timer -->
+    <div id="catch-area"></div>
+
+    <script>
+        const catchArea = document.getElementById('catch-area');
+        const scoreElement = document.getElementById('score');
+        const timerElement = document.getElementById('timer');
+        const items = ['🎁', '❄️', '🎅', '⭐', '🎄', '🎀', '🍬', '🍪', '🌟', '🎋']; // Lista di oggetti natalizi aggiunti
+        let score = 0;
+        let timeLeft = 30; // Tempo iniziale (in secondi)
+        let gameInterval, timerInterval;
+        let itemFallSpeed = 3; // Velocità di caduta iniziale
+        let itemFrequency = 1000; // Frequenza di caduta degli oggetti
+
+        // Funzione per creare un nuovo oggetto natalizio che cade
+        function createItem() {
+            const item = document.createElement('div');
+            const randomIndex = Math.floor(Math.random() * items.length);
+            item.className = 'gift';
+            item.textContent = items[randomIndex]; // Oggetto casuale
+            item.style.left = `${Math.random() * (catchArea.offsetWidth - 50)}px`;
+            item.style.animation = `fall ${itemFallSpeed}s linear infinite`;
+
+            // Aggiornamento del punteggio quando l'oggetto viene "pescato"
+            item.addEventListener('click', () => {
+                score++;
+                scoreElement.textContent = `Punteggio: ${score}`; // Mostra il punteggio aggiornato
+                item.remove();
+            });
+
+            catchArea.appendChild(item);
+        }
+
+        // Crea nuovi oggetti ogni 1 secondo (frequenza iniziale)
+        gameInterval = setInterval(createItem, itemFrequency);
+
+        // Aumenta la velocità e la frequenza di caduta con il tempo
+        function increaseDifficulty() {
+            if (timeLeft % 10 === 0 && timeLeft !== 0) {
+                itemFallSpeed *= 0.9; // Rende gli oggetti più veloci
+                itemFrequency = Math.max(500, itemFrequency - 100); // Riduce il tempo tra ogni oggetto
+                clearInterval(gameInterval);
+                gameInterval = setInterval(createItem, itemFrequency); // Modifica la frequenza di creazione degli oggetti
+            }
+        }
+
+        // Rimuove gli oggetti fuori dallo schermo
+        setInterval(() => {
+            const fallingItems = document.querySelectorAll('.gift');
+            fallingItems.forEach(item => {
+                const top = parseFloat(window.getComputedStyle(item).top);
+                if (top > catchArea.offsetHeight) {
+                    item.remove(); // Rimuove l'oggetto che è andato fuori dallo schermo
+                }
+            });
+        }, 100);
+
+        // Funzione per aggiornare il timer
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval); // Ferma il timer
+                clearInterval(gameInterval); // Ferma il gioco
+                alert("Il gioco è finito! Il tuo punteggio finale è: " + score);
+            } else {
+                timeLeft--;
+                increaseDifficulty(); // Aumenta la difficoltà durante il gioco
+                timerElement.textContent = `Tempo: ${timeLeft}`;
+            }
+        }
+
+        // Inizializza il timer
+        timerInterval = setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
